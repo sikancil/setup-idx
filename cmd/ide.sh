@@ -3,7 +3,7 @@
 echo "Welcome to setup-idx!"
 echo "This will replace your current IDX configuration."
 
-read -rp "❓ Continue? (Yes/No): " REPLACE_IDX_DEV
+read -p "❓ Continue? (Yes/No): " REPLACE_IDX_DEV
 
 SETUP_PATH="$(pwd)/.setup-idx"
 IDX_CONFIG_PATH="$(pwd)/.idx"

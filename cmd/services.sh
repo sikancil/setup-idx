@@ -49,7 +49,7 @@ if [ "$choice" -ge 1 ] && [ "$choice" -le 6 ]; then
     timestamp=$(stat -c %Y $SERVICE_ENV_PATH)
 
     # Open .env.service file in nano
-    read -rp "❓ Open Variables configuration file? (Yes/No): " OPEN_VARS_FILE
+    read -p "❓ Open Variables configuration file? (Yes/No): " OPEN_VARS_FILE
 
     # Convert input to lowercase
     OPEN_VARS_FILE=$(echo "$OPEN_VARS_FILE" | tr '[:upper:]' '[:lower:]')
