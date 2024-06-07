@@ -14,8 +14,7 @@ if [ "$ADD_TO_PATH" = "yes" ] || [ "$ADD_TO_PATH" = "y" ]; then
   echo "export PATH=\"$(pwd)/.setup-idx/cmd/setup-idx:\$PATH\"" >> ~/.bashrc
   export PATH="$(pwd)/.setup-idx/cmd/setup-idx:\$PATH"
   source ~/.bashrc
-  echo "Done! Added to PATH."
-  setup-idx
+  echo "🚀 NEXT, Run:  setup-idx"
 else
-  ./.setup-idx/cmd/setup-idx
+  echo "🚀 NEXT, Run:  ./.setup-idx/cmd/setup-idx"
 fi
