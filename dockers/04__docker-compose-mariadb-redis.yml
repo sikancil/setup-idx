@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  # MariaDB
+  mariadb:
+    image: mariadb:10.5.18-focal
+    hostname: mariadb
+    container_name: mariadb
+    ports:
+      - 3306:3306
+    env_file:
+      - ../.env.services
+  
+  # Redis Stack
+  redis-stack:
+    image: redis/redis-stack:7.2.0-v10
+    hostname: redis-stack
+    container_name: redis-stack
+    ports:
+      - 6379:6379
+      - 8001:8001
+    env_file:
+      - ../.env.services

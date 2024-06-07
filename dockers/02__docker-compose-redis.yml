@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  redis-stack:
+    image: redis/redis-stack:7.2.0-v10
+    hostname: redis-stack
+    container_name: redis-stack
+    ports:
+      - 6379:6379
+      - 8001:8001
+    env_file:
+      - ../.env.services

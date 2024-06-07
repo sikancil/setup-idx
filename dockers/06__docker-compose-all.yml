@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # MariaDB
+  mariadb:
+    image: mariadb:10.5.18-focal
+    hostname: mariadb
+    container_name: mariadb
+    ports:
+      - 3306:3306
+    env_file:
+      - ../.env.services
+  
+  # Redis Stack
+  redis-stack:
+    image: redis/redis-stack:7.2.0-v10
+    hostname: redis-stack
+    container_name: redis-stack
+    ports:
+      - 6379:6379
+      - 8001:8001
+    env_file:
+      - ../.env.services
+
+  # ZooKeeper
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.4
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - 2181:2181
+    env_file:
+      - ../.env.services
+
+  # Kafka
+  kafka:
+    image: confluentinc/cp-kafka:7.4.4
+    hostname: kafka
+    container_name: kafka
+    ports:
+      - 9092:9092
+    env_file:
+      - ../.env.services
+    depends_on:
+      - zookeeper
