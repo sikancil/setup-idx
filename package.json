@@ -1,0 +1,18 @@
+{
+  "name": "setup-idx",
+  "version": "1.0.0",
+  "description": "This project streamlines the setup of your IDX development environment, offering a pre-configured setup and tools to manage SSH keys and Docker-based services.",
+  "author": "DAW <https://github.com/sikancil>",
+  "private": false,
+  "license": "MIT",
+  "scripts": {
+    "00:===WORKSPACE INITIALIZATIONS===:========================================================": "",
+    "patch:bun": "echo '(i) Please restart your terminal/schell!' && grep -qE \"~/.bun/bin|/home/user/.bun/bin\" ~/.bashrc || (echo \"export PATH=~/.bun/bin:${PATH}\" >> ~/.bashrc && echo 'PATH updated' && source ~/.bashrc)",
+    "install:bun": "bash -c 'if which bun >/dev/null 2>&1; then bun_version=$(bun -v); npm_version=$(npm view bun version); if [[ \"$bun_version\" != \"$npm_version\" ]]; then echo \"Bun version mismatch. Upgrading...\"; curl -fsSL https://bun.sh/install | bash; npm run patch:bun; else echo \"Bun is installed and up-to-date\"; fi; else echo \"Bun is not installed. Installing...\"; curl -fsSL https://bun.sh/install | bash; npm run patch:bun; fi'",
+    "idx:init": "./cmd/index.sh"
+  },
+  "repository": "https://github.com/sikancil/setup-idx.git",
+  "bugs": "https://github.com/sikancil/setup-idx/issues",
+  "dependencies": {},
+  "devDependencies": {}
+}
