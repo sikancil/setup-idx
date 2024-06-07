@@ -1,9 +1,9 @@
 #!/bin/bash
 
 SERVICES=(
-  "MariaDB (mariadb:10.5.18-focal)"
-  "Redis Stack (redis-stack:7.2.0-v10)"
-  "Kafka & Zookeeper (cp-kafka:7.4.4 + cp-zookeeper:7.4.4)"
+  "MariaDB mariadb:10.5.18-focal"
+  "Redis Stack redis-stack:7.2.0-v10"
+  "Kafka & Zookeeper cp-kafka:7.4.4 + cp-zookeeper:7.4.4"
   "MariaDB and Redis Stack"
   "MariaDB and Kafka + Zookeeper"
   "All those services"
@@ -39,7 +39,8 @@ TMP_SERVICES_PATH="${SETUP_PATH}/.services"
 
 # Read user input
 read -p "🚦 Enter your choice: " choice
-echo -e "👉 Deployment: $SERVICES[$choice] selected.\n"
+echo -e "👉 Deployment: ${SERVICES[$choice]} selected.\n"
+echo "$choice"
 
 if [ "$choice" -ge 1 ] && [ "$choice" -le 6 ]; then
   if [ ! -f $SERVICE_ENV_PATH ]; then
@@ -75,10 +76,12 @@ if [ "$choice" -ge 1 ] && [ "$choice" -le 6 ]; then
 
   # Save user's choice to a file
   echo "${COMPOSER[$choice-1]}" > $TMP_SERVICES_PATH
+  # echo "$(cat $TMP_SERVICES_PATH)"
   
   docker compose -f "${SETUP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" up -d
   echo -e "🚀 Services has been lanched!\n"
 elif [ "$choice" -eq 7 ]; then
+  echo "$(cat TMP_SERVICES_PATH)"
   if [ -f $TMP_SERVICES_PATH ]; then
     docker compose -f "${SETUP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" restart
     echo -e "🎷 Services has been restarted!\n"
@@ -86,6 +89,7 @@ elif [ "$choice" -eq 7 ]; then
     echo -e "🚫 No services to restart!\n"
   fi
 elif [ "$choice" -eq 8 ]; then
+  echo "$(cat TMP_SERVICES_PATH)"
   if [ -f $TMP_SERVICES_PATH ]; then
     docker compose -f "${SETUP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" down --remove-orphans --volumes
     echo -e "⛔️ Services has been shutdown!\n"
