@@ -12,11 +12,12 @@ echo ""
 read -r "❓ Add to PATH? (Yes/No): " ADD_TO_PATH
 
 ADD_TO_PATH=$(echo "$ADD_TO_PATH" | tr '[:upper:]' '[:lower:]')
+
 if [ "$ADD_TO_PATH" = "yes" ] || [ "$ADD_TO_PATH" = "y" ]; then
-  echo "export PATH=\"$(pwd)/.setup-idx/cmd/setup-idx:\$PATH\"" >> ~/.bashrc
-  export PATH="$(pwd)/.setup-idx/cmd/setup-idx:\$PATH"
+  echo "export PATH=\"$(pwd)/.setup-idx/cmd/setup-idx:$PATH\"" >> ${HOME}/.bashrc
+  # export PATH="$(pwd)/.setup-idx/cmd/setup-idx:\$PATH"
   source ~/.bashrc
-  echo "🚀 NEXT, Run:  setup-idx"
+  echo -e "🚀 NEXT, Run:  setup-idx\n"
 else
-  echo "🚀 NEXT, Run:  ./.setup-idx/cmd/setup-idx"
+  echo -e "🚀 NEXT, Run:  ./.setup-idx/cmd/setup-idx\n"
 fi
