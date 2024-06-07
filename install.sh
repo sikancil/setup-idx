@@ -12,5 +12,10 @@ read -rp "❓ Add to PATH? (Yes/No): " ADD_TO_PATH
 ADD_TO_PATH=$(echo "$ADD_TO_PATH" | tr '[:upper:]' '[:lower:]')
 if [ "$REPLACE_IDX_DEV" = "yes" ] || [ "$REPLACE_IDX_DEV" = "y" ]; then
   echo "export PATH=\"$(pwd)/.setup-idx/cmd/setup-idx:\$PATH\"" >> ~/.bashrc
+  export PATH="$(pwd)/.setup-idx/cmd/setup-idx:\$PATH"
+  source ~/.bashrc
   echo "Done! Added to PATH."
+  setup-idx
+else
+  ./.setup-idx/cmd/setup-idx
 fi
