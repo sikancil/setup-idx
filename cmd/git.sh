@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SSH_PERSONAL_PATH="./.ssh"
+SSH_PERSONAL_PATH="${HOME}/.ssh"
 if [ ! -d $SSH_PERSONAL_PATH ]; then mkdir $SSH_PERSONAL_PATH; else echo "(i) SSH personal directory exist"; fi
 
 # Define the keysOptions
@@ -143,4 +143,9 @@ done
 
 # Inform if SSH Config was updated
 echo -e "👉 SSH Config was updated to preffered Provider(s). Check: ${SSH_PERSONAL_PATH}/config\n"
-echo -e "🔑 Now you can continue use git to clone your preferred repository.\n"
+echo "🔑 Now you can continue use git to clone your preferred repository."
+echo "========================================================="
+echo "‼️‼️ COPY THIS PUBLIC KEY TO YOUR GIT PROVIDER ACCOUNT ‼️‼️"
+echo "========================================================="
+echo "${PUBLIC_KEY}"
+echo "========================================================="
