@@ -9,7 +9,7 @@ echo "Otherwise you will call it by:"
 echo "$  ./.setup-idx/cmd/setup-idx"
 echo ""
 
-read -p "❓ Add to PATH? (Yes/No): " ADD_TO_PATH
+read -r "❓ Add to PATH? (Yes/No): " ADD_TO_PATH
 
 ADD_TO_PATH=$(echo "$ADD_TO_PATH" | tr '[:upper:]' '[:lower:]')
 if [ "$ADD_TO_PATH" = "yes" ] || [ "$ADD_TO_PATH" = "y" ]; then

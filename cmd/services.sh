@@ -81,11 +81,19 @@ if [ "$choice" -ge 1 ] && [ "$choice" -le 6 ]; then
   docker compose -f "${SETUP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" up -d
   echo -e "🚀 Services has been lanched!\n"
 elif [ "$choice" -eq 7 ]; then
-  docker compose -f "${SETUP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" restart
-  echo -e "🎷 Services has been restarted!\n"
+  if [ -f $TMP_SERVICES_PATH ]; then
+    docker compose -f "${SETUP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" restart
+    echo -e "🎷 Services has been restarted!\n"
+  else
+    echo -e "🚫 No services to restart!\n"
+  fi
 elif [ "$choice" -eq 8 ]; then
-  docker compose -f "${SETUP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" down --remove-orphans --volumes
-  echo -e "⛔️ Services has been shutdown!\n"
+  if [ -f $TMP_SERVICES_PATH ]; then
+    docker compose -f "${SETUP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" down --remove-orphans --volumes
+    echo -e "⛔️ Services has been shutdown!\n"
+  else
+    echo -e "🚫 No services to shutdown!\n"
+  fi
 elif [ "$choice" -eq 9 ]; then
   echo -e "👋 Exiting script...\n"
   exit 0
