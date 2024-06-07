@@ -21,7 +21,12 @@ git clone --depth 1 https://github.com/your-username/setup-idx.git .setup-idx &&
 ```bash
 curl -fsSL https://raw.githubusercontent.com/sikancil/setup-idx/main/install.sh | bash
 ```
-2. **Run the setup script:** Run the main script and follow the prompts to select the features you want to configure:
+2. **Uninstall**:
+  - Run this script:
+```bash
+curl -fsSL https://raw.githubusercontent.com/sikancil/setup-idx/main/uninstall.sh | bash
+```
+3. **Run the setup script:** Run the main script and follow the prompts to select the features you want to configure:
 ```bash
 ./setup-idx/cmd/index.sh
 ```
@@ -34,8 +39,8 @@ You can choose to:
   - Exit
 ```
 
-3. **Follow the prompts:** Each script will guide you through the necessary steps and may ask for confirmation before making changes.
-4. **Rebuild your IDX environment (if applicable):** After configuring IDX, go to your Project IDX workspace and rebuild the environment to apply the changes.
+4. **Follow the prompts:** Each script will guide you through the necessary steps and may ask for confirmation before making changes.
+5. **Rebuild your IDX environment (if applicable):** After configuring IDX, go to your Project IDX workspace and rebuild the environment to apply the changes.
 
 ### What's Included
 - **Pre-configured `dev.nix` file:**  Commonly use to optimized settings for IDX.
