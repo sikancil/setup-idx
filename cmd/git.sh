@@ -7,7 +7,7 @@ if [ ! -d $SSH_PERSONAL_PATH ]; then mkdir $SSH_PERSONAL_PATH; else echo "(i) SS
 keysOptions=("Generate SSH Keys" "Provide SSH Keys")
 
 # Display the prompt
-PS3="Please select an option: "
+PS3="🚦 Please select an option: "
 # Read the user's selection
 select opt in "${keysOptions[@]}"; do
   echo -e ">> $opt selected.\n"
@@ -15,10 +15,10 @@ select opt in "${keysOptions[@]}"; do
   case $opt in
     "Generate SSH Keys")
       # Get the user's email
-      read -p "Enter your email address: " USER_EMAIL
+      read -p "❓ Enter your email address: " USER_EMAIL
 
       # Get the key name
-      read -p "Enter the key name (default: ${USER}@$(hostname)): " KEY_NAME
+      read -p "❓ Enter the key name (default: ${USER}@$(hostname)): " KEY_NAME
       if [ -z "$KEY_NAME" ]; then
         KEY_NAME="${USER}@$(hostname)"
       fi
@@ -28,13 +28,13 @@ select opt in "${keysOptions[@]}"; do
       mv "$(pwd)/${KEY_NAME}" "${SSH_PERSONAL_PATH}/"
       mv "$(pwd)/${KEY_NAME}.pub" "${SSH_PERSONAL_PATH}/"
 
-      echo "SSH key generated successfully."
+      echo "🔑 SSH key generated successfully."
       break
       ;;
     "Provide SSH Keys")
       # Get the private key
-      # read -rp "Paste your Private Key (when done press Ctrl+D): " -d $'\04' PRIVATE_KEY
-      echo -e "Paste your Private Key below:"
+      # read -rp "❓ Paste your Private Key (when done press Ctrl+D): " -d $'\04' PRIVATE_KEY
+      echo -e "❓ Paste your Private Key below:"
       IFS= read -d '' -n 1 PRIVATE_KEY   
       while IFS= read -d '' -n 1 -t 1 c
       do
@@ -42,8 +42,8 @@ select opt in "${keysOptions[@]}"; do
       done
 
       # Get the public key
-      # read -rp "Paste your Public Key (when done press Ctrl+D): " -d $'\04' PUBLIC_KEY
-      echo -e "Paste your Public Key below:"
+      # read -rp "❓ Paste your Public Key (when done press Ctrl+D): " -d $'\04' PUBLIC_KEY
+      echo -e "❓ Paste your Public Key below:"
       IFS= read -d '' -n 1 PUBLIC_KEY   
       while IFS= read -d '' -n 1 -t 1 c
       do
@@ -62,11 +62,11 @@ select opt in "${keysOptions[@]}"; do
       echo "${PRIVATE_KEY}" | awk 'NF' > "${SSH_PERSONAL_PATH}/${KEY_NAME}"
       echo "${PUBLIC_KEY}" | awk 'NF' > "${SSH_PERSONAL_PATH}/${KEY_NAME}.pub"
 
-      echo "SSH keys provided successfully."
+      echo "🔑 SSH keys provided successfully."
       break
       ;;
     *)
-      echo "Invalid option. Please select a valid option."
+      echo "🚫 Invalid option!"
       ;;
   esac
 done
@@ -136,7 +136,7 @@ select opt in "${providerOptions[@]}"; do
       break
       ;;
     *)
-      echo "Invalid option. Please select a valid option."
+      echo "🚫 Invalid option!"
       ;;
   esac
 done
