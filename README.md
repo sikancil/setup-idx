@@ -12,9 +12,14 @@ Before you begin, ensure you have the following:
 - **Basic understanding of command line/terminal usage.**
 
 ### How to Use
-1. **Clone this repository:**
+1. **Install**:
+  - Clone this repository:
 ```bash
-git clone --depth 1 https://github.com/your-username/setup-idx.git .setup-idx
+git clone --depth 1 https://github.com/your-username/setup-idx.git .setup-idx && ./.setup-idx/cmd/setup-idx
+```
+  - Run this script:
+```bash
+curl -fsSL https://raw.githubusercontent.com/sikancil/setup-idx/main/install.sh | bash
 ```
 2. **Run the setup script:** Run the main script and follow the prompts to select the features you want to configure:
 ```bash
