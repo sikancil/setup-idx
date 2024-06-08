@@ -1,5 +1,8 @@
 #!/bin/bash
 
+APP_HOME="${HOME}/.setup-idx"
+APP_PATH="${APP_HOME}/app"
+
 indexOptions=(
   "Walkthrough all"
   "Preconfigure IDX"
@@ -15,23 +18,23 @@ select opt in "${indexOptions[@]}"; do
   
   case $opt in
     "Walkthrough all")
-      $(pwd)/.setup-idx/cmd/ide.sh
+      ${APP_PATH}/ide.sh
       sleep 2
-      $(pwd)/.setup-idx/cmd/git.sh
+      ${APP_PATH}/git.sh
       sleep 2
-      $(pwd)/.setup-idx/cmd/services.sh
+      ${APP_PATH}/services.sh
       break
       ;;
     "Preconfigure IDX")
-      $(pwd)/.setup-idx/cmd/ide.sh
+      ${APP_PATH}/ide.sh
       break
       ;;
     "Only Setup SSH Keys")
-      $(pwd)/.setup-idx/cmd/git.sh
+      ${APP_PATH}/git.sh
       break
       ;;
     "Only Setup Services")
-      $(pwd)/.setup-idx/cmd/services.sh
+      ${APP_PATH}/services.sh
       break
       ;;
     "Exit")
