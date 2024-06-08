@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "Upgrading setup-idx..."
+
+APP_HOME=$HOME/.setup-idx
+APP_PATH=$APP_HOME/app
+
+read -p "❓ Continue (Yes/No): " UPGRADE_APP
+
+UPGRADE_APP=$(echo "$UPGRADE_APP" | tr '[:upper:]' '[:lower:]')
+
+if [ "$UPGRADE_APP" = "yes" ] || [ "$UPGRADE_APP" = "y" ]; then
+  rm -rf $APP_PATH
+  $APP_HOME/install.sh
+fi
+
