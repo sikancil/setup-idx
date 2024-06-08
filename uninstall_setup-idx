@@ -7,7 +7,7 @@ if [ -d $APP_PATH/ ]; then rm -rf $APP_PATH/; fi;
 
 if [ -d $APP_HOME/ ]; then rm -rf $APP_HOME/; fi;
 
-SEARCH="export PATH=\$HOME\/.setup-idx:\$PATH"
+SEARCH="export PATH=\$HOME/.setup-idx:\$PATH"
 REMOVE_LINE="export PATH=\$HOME\/\.setup-idx:\$PATH"
 
 if grep -q "$SEARCH" ~/.bashrc 2>/dev/null; then
