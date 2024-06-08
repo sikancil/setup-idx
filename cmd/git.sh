@@ -1,10 +1,14 @@
 #!/bin/bash
 
-SSH_PERSONAL_PATH="${HOME}/.ssh"
+SSH_PERSONAL_PATH=${HOME}/.ssh
+
 if [ ! -d $SSH_PERSONAL_PATH ]; then mkdir $SSH_PERSONAL_PATH; else echo "(i) SSH personal directory exist"; fi
 
 # Define the keysOptions
 keysOptions=("Generate SSH Keys" "Provide SSH Keys")
+
+# SSH PUBLIC KEY
+SSH_PUBLIC_KEY=""
 
 # Display the prompt
 PS3="🚦 Please select an option: "
@@ -27,6 +31,13 @@ select opt in "${keysOptions[@]}"; do
       ssh-keygen -t ed25519 -C "$USER_EMAIL" -f "$KEY_NAME"
       mv "$(pwd)/${KEY_NAME}" "${SSH_PERSONAL_PATH}/"
       mv "$(pwd)/${KEY_NAME}.pub" "${SSH_PERSONAL_PATH}/"
+
+      # Read the public key
+      SSH_PUBLIC_KEY=$(cat "${SSH_PERSONAL_PATH}/${KEY_NAME}.pub")
+
+      # Set permissions
+      chmod 0600 "${SSH_PERSONAL_PATH}/${KEY_NAME}"
+      chmod 0644 "${SSH_PERSONAL_PATH}/${KEY_NAME}.pub"
 
       echo "🔑 SSH key generated successfully."
       break
@@ -57,10 +68,16 @@ select opt in "${keysOptions[@]}"; do
       echo "${PRIVATE_KEY}" | grep -c '^$'
       echo "${PUBLIC_KEY}" | grep -c '^$'
 
-      # echo "${PRIVATE_KEY}" | sed -e '/^$/d' > "${SSH_PERSONAL_PATH}/${KEY_NAME}"
-      # echo "${PUBLIC_KEY}" | sed -e '/^$/d' > "${SSH_PERSONAL_PATH}/${KEY_NAME}.pub"
+      # Write the keys to files
       echo "${PRIVATE_KEY}" | awk 'NF' > "${SSH_PERSONAL_PATH}/${KEY_NAME}"
       echo "${PUBLIC_KEY}" | awk 'NF' > "${SSH_PERSONAL_PATH}/${KEY_NAME}.pub"
+
+      # Read the public key
+      SSH_PUBLIC_KEY=$(cat "${SSH_PERSONAL_PATH}/${KEY_NAME}.pub")
+
+      # Set permissions
+      chmod 0600 "${SSH_PERSONAL_PATH}/${KEY_NAME}"
+      chmod 0644 "${SSH_PERSONAL_PATH}/${KEY_NAME}.pub"
 
       echo "🔑 SSH keys provided successfully."
       break
@@ -108,38 +125,47 @@ Host gitlab.com\n\
   Port 443\n\
   "
 
-# Define the options
-providerOptions=("Use ONLY with BitBucket" "Use ONLY with Github" "Use ONLY with Gitlab" "Add All Providers")
+# Ask if User want to configure SSH Provider
+read -p "❓ Do you want to configure SSH Provider (Yes/No): " ADDING_SSH_PROVIDER
 
-# Display the prompt
-PS3="🚦 Please select an Provider option: "
+# Convert input to lowercase
+ADDING_SSH_PROVIDER=$(echo "$ADDING_SSH_PROVIDER" | tr '[:upper:]' '[:lower:]')
 
-# Read the user's selection
-select opt in "${providerOptions[@]}"; do
-  echo "👉 ${keysOptions[@]} selected"
+# Check if input is "yes" or "y"
+if [ "$ADDING_SSH_PROVIDER" = "yes" ] || [ "$ADDING_SSH_PROVIDER" = "y" ]; then
+  # Define the options
+  providerOptions=("Use ONLY with BitBucket" "Use ONLY with Github" "Use ONLY with Gitlab" "Add All Providers")
 
-  case $opt in
-    "Use ONLY with BitBucket")
-      echo -e "${PROVIDER_BITBUCKET}" >> "${SSH_PERSONAL_PATH}/config";
-      break
-      ;;
-    "Use ONLY with Github")
-      echo -e "${PROVIDER_GITHUB}" >> "${SSH_PERSONAL_PATH}/config";
-      break
-      ;;
-    "Use ONLY with Gitlab")
-      echo -e "${PROVIDER_GITHUB}" >> "${SSH_PERSONAL_PATH}/config";
-      break
-      ;;
-    "Add All Providers")
-      echo -e "${PROVIDER_BITBUCKET}\n\n${PROVIDER_GITHUB}\n\n${PROVIDER_GITLAB}" > "${SSH_PERSONAL_PATH}/config";
-      break
-      ;;
-    *)
-      echo "🚫 Invalid option!"
-      ;;
-  esac
-done
+  # Display the prompt
+  PS3="🚦 Please select an Provider option: "
+
+  # Read the user's selection
+  select opt in "${providerOptions[@]}"; do
+    echo "👉 ${keysOptions[@]} selected"
+
+    case $opt in
+      "Use ONLY with BitBucket")
+        echo -e "${PROVIDER_BITBUCKET}" >> "${SSH_PERSONAL_PATH}/config";
+        break
+        ;;
+      "Use ONLY with Github")
+        echo -e "${PROVIDER_GITHUB}" >> "${SSH_PERSONAL_PATH}/config";
+        break
+        ;;
+      "Use ONLY with Gitlab")
+        echo -e "${PROVIDER_GITHUB}" >> "${SSH_PERSONAL_PATH}/config";
+        break
+        ;;
+      "Add All Providers")
+        echo -e "${PROVIDER_BITBUCKET}\n\n${PROVIDER_GITHUB}\n\n${PROVIDER_GITLAB}" > "${SSH_PERSONAL_PATH}/config";
+        break
+        ;;
+      *)
+        echo "🚫 Invalid option!"
+        ;;
+    esac
+  done
+fi
 
 # Inform if SSH Config was updated
 echo -e "👉 SSH Config was updated to preffered Provider(s). Check: ${SSH_PERSONAL_PATH}/config\n"
@@ -147,5 +173,5 @@ echo "🔑 Now you can continue use git to clone your preferred repository."
 echo "========================================================="
 echo "‼️‼️ COPY THIS PUBLIC KEY TO YOUR GIT PROVIDER ACCOUNT ‼️‼️"
 echo "========================================================="
-echo "${PUBLIC_KEY}"
+echo "${SSH_PUBLIC_KEY}"
 echo "========================================================="

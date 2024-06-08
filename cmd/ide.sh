@@ -5,9 +5,9 @@ echo "This will replace your current IDX configuration."
 
 read -p "❓ Continue? (Yes/No): " REPLACE_IDX_DEV
 
-SETUP_PATH="$(pwd)/.setup-idx"
-IDX_CONFIG_PATH="$(pwd)/.idx"
-IDX_CONFIG_FILE="$IDX_CONFIG_PATH/dev.nix"
+SETUP_PATH=$(pwd)/.setup-idx
+IDX_CONFIG_PATH=$(pwd)/.idx
+IDX_CONFIG_FILE=$IDX_CONFIG_PATH/dev.nix
 
 # Convert input to lowercase
 REPLACE_IDX_DEV=$(echo "$REPLACE_IDX_DEV" | tr '[:upper:]' '[:lower:]')

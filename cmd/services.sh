@@ -33,9 +33,9 @@ COMPOSER=(
   "06__docker-compose-all.yml"
 )
 
-SETUP_PATH="$(pwd)/.setup-idx"
-SERVICE_ENV_PATH="${SETUP_PATH}/.env.services"
-TMP_SERVICES_PATH="${SETUP_PATH}/.services"
+SETUP_PATH=$(pwd)/.setup-idx
+SERVICE_ENV_PATH=$SETUP_PATH/.env.services
+TMP_SERVICES_PATH=$SETUP_PATH/../.services
 
 # Read user input
 read -p "🚦 Enter your choice: " choice
@@ -44,7 +44,7 @@ echo "$choice"
 
 if [ "$choice" -ge 1 ] && [ "$choice" -le 6 ]; then
   if [ ! -f $SERVICE_ENV_PATH ]; then
-    cp "${SETUP_PATH}/cmd/.env.services-example" "${SERVICE_ENV_PATH}";
+    cp $SETUP_PATH/cmd/.env.services-example $SERVICE_ENV_PATH;
   fi
     
   # Get the last modified timestamp of .env.services
@@ -72,7 +72,7 @@ if [ "$choice" -ge 1 ] && [ "$choice" -le 6 ]; then
   else
     echo "📝 Variables have not changed!"
   fi;
-  echo -e "👉 You can comeback later to check variables in: ${SERVICE_ENV_PATH}\n"
+  echo -e "👉 You can comeback later to check variables in: $SERVICE_ENV_PATH\n"
 
   # Save user's choice to a file
   echo "${COMPOSER[$choice-1]}" > $TMP_SERVICES_PATH
@@ -81,7 +81,7 @@ if [ "$choice" -ge 1 ] && [ "$choice" -le 6 ]; then
   docker compose -f "${SETUP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" up -d
   echo -e "🚀 Services has been lanched!\n"
 elif [ "$choice" -eq 7 ]; then
-  echo "$(cat TMP_SERVICES_PATH)"
+  echo "$(cat $TMP_SERVICES_PATH)"
   if [ -f $TMP_SERVICES_PATH ]; then
     docker compose -f "${SETUP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" restart
     echo -e "🎷 Services has been restarted!\n"
@@ -89,7 +89,7 @@ elif [ "$choice" -eq 7 ]; then
     echo -e "🚫 No services to restart!\n"
   fi
 elif [ "$choice" -eq 8 ]; then
-  echo "$(cat TMP_SERVICES_PATH)"
+  echo "$(cat $TMP_SERVICES_PATH)"
   if [ -f $TMP_SERVICES_PATH ]; then
     docker compose -f "${SETUP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" down --remove-orphans --volumes
     echo -e "⛔️ Services has been shutdown!\n"
