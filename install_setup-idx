@@ -1,0 +1,49 @@
+#!/bin/bash
+
+APP_HOME=$HOME/.setup-idx; \
+APP_PATH=$APP_HOME/app; \
+SCRIPTS_PATH=$APP_PATH/cmd
+
+if [ ! -d $APP_HOME ]; then mkdir $APP_HOME; else echo "(@) 1 ✅"; fi;
+
+if [ -d $APP_PATH ]; then rm -rf $APP_PATH; else echo "(@) 2 ✅"; fi;
+
+git clone --depth 1 https://github.com/sikancil/setup-idx.git $APP_PATH
+
+sleep 1
+
+cp $APP_PATH/install $APP_HOME/; \
+cp $APP_PATH/uninstall $APP_HOME/; \
+cp $APP_PATH/update $APP_HOME/
+
+cp $SCRIPTS_PATH/setup-idx.sh $APP_HOME/setup-idx; \
+cp $SCRIPTS_PATH/*.sh $APP_HOME/
+
+chmod +x $APP_HOME/setup-idx; \
+chmod +x $APP_HOME/*.sh
+
+# Adding to ~/.bashrc
+# The content to check/add/remove (with escaped characters)
+CONTENT='#============================='
+CONTENT+=$'\n# Setup IDX'
+CONTENT+=$'\n#============================='
+CONTENT+=$'\nexport PATH=\$HOME/.setup-idx:\$PATH'
+CONTENT+=$'\n#=============================\n'
+# echo -e "#=============================\n# Setup IDX\n#=============================\nexport PATH=\$HOME/.setup-idx:\$PATH\n#=============================\n" >> $HOME/.bashrc
+
+# Check if the content exists in ~/.bashrc
+if grep -q "$CONTENT" ~/.bashrc; then
+else
+    # Content doesn't exist, so add it
+    echo "Adding IDX setup to ~/.bashrc..."
+    echo -e "$CONTENT" >> ~/.bashrc 
+fi
+source $HOME/.bashrc
+echo "🎉 NEXT, to:"
+echo "   🚀 Run       : setup-idx"
+echo "                    or"
+echo "                  ~/.setup-idx/setup-idx"
+echo "   🚀 Update    : setup-idx"
+echo "                  👉 then choose 5 to Update"
+echo "   🚀 Uninstall : setup-idx"
+echo "                  👉 then choose 6 to Uninstall"
