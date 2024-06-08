@@ -1,0 +1,26 @@
+#!/bin/bash
+
+APP_HOME=$HOME/.setup-idx
+APP_PATH=$APP_HOME/app
+SCRIPTS_PATH=$APP_PATH/cmd
+
+if [ ! -d $APP_HOME ]; then mkdir $APP_HOME; else echo "(@) 1 ✅"; fi;
+
+if [ -d $APP_PATH ]; then rm -rf $APP_PATH; else echo "(@) 2 ✅"; fi;
+
+git clone --depth 1 https://github.com/sikancil/setup-idx.git $APP_PATH
+
+sleep 2
+
+cp $APP_PATH/*.sh $APP_HOME/
+cp $SCRIPTS_PATH/setup-idx.sh $APP_HOME/setup-idx
+cp $SCRIPTS_PATH/*.sh $APP_HOME/
+chmod +x $APP_HOME/setup-idx
+chmod +x $APP_HOME/*.sh
+
+echo "export PATH=\$HOME/.setup-idx:\$PATH" >> $HOME/.bashrc
+source $HOME/.bashrc
+echo "🚀 NEXT, Run:  setup-idx"
+echo "   or"
+echo "🚀 NEXT, Run:  ~/.setup-idx/setup-idx\n"
+cd $(pwd)
