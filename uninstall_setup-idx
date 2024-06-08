@@ -1,0 +1,22 @@
+#!/bin/bash
+
+APP_HOME=$HOME/.setup-idx
+APP_PATH=$APP_HOME/app
+
+if [ -d $APP_PATH/ ]; then rm -rf $APP_PATH/; fi;
+
+if [ -d $APP_HOME/ ]; then rm -rf $APP_HOME/; fi;
+
+# The content to check/add/remove (with escaped characters)
+CONTENT='#============================='
+CONTENT+=$'\n# Setup IDX'
+CONTENT+=$'\n#============================='
+CONTENT+=$'\nexport PATH=\$HOME/.setup-idx:\$PATH'
+CONTENT+=$'\n#=============================\n'
+
+# Check if the content exists in ~/.bashrc
+if grep -q "$CONTENT" ~/.bashrc; then
+    # Content exists, so remove it
+    echo "Removing IDX setup from ~/.bashrc..."
+    sed -i "/$CONTENT/d" ~/.bashrc
+fi
