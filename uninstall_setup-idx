@@ -7,11 +7,14 @@ if [ -d $APP_PATH/ ]; then rm -rf $APP_PATH/; fi;
 
 if [ -d $APP_HOME/ ]; then rm -rf $APP_HOME/; fi;
 
-# The content to check/add/remove (with escaped characters)
 SEARCH="export PATH=\$HOME\/.setup-idx:\$PATH"
 REMOVE_LINE="export PATH=\$HOME\/\.setup-idx:\$PATH"
 
 if grep -q "$SEARCH" ~/.bashrc 2>/dev/null; then
   sed -i "/$REMOVE_LINE/d" ~/.bashrc
+  source $HOME/.bashrc
   echo "📝 Setup IDX removed from ~/.bashrc..."
+else
+  echo "📝 Setup IDX not found in ~/.bashrc..."
+  echo "👀 To make sure, manually check in ~/.bashrc for: \"$SEARCH\""
 fi

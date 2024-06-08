@@ -30,8 +30,7 @@ if grep -q "$ADD_TO_PATH" ~/.bashrc; then
   echo "📝 Setup IDX exists in ~/.bashrc..."
 else
   echo -e "$ADD_TO_PATH" >> ~/.bashrc 
-  echo "Setup IDX newly added to ~/.bashrc" 
-  echo "📝 Setup IDX exists in ~/.bashrc..."
+  echo "📝 Setup IDX newly added to ~/.bashrc"
 fi
 
 source $HOME/.bashrc
