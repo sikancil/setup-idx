@@ -40,13 +40,13 @@ select opt in "${indexOptions[@]}"; do
       break
       ;;
     "Update")
-      ${APP_PATH}/update_setup-idx.sh
+      ${APP_PATH}/update_setup-idx
       echo -e "🚀 Setup IDX has been updated!\n"
       exit 0
       break
       ;;
     "Uninstall")
-      ${APP_PATH}/uninstall_setup-idx.sh
+      ${APP_PATH}/uninstall_setup-idx
       echo -e "🚀 Setup IDX has been uninstalled!\n"
       exit 0
       break
