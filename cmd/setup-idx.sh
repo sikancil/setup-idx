@@ -8,6 +8,8 @@ indexOptions=(
   "Preconfigure IDX"
   "Only Setup SSH Keys"
   "Only Setup Services"
+  "Update"
+  "Uninstall"
   "Exit"
 )
 
@@ -37,9 +39,23 @@ select opt in "${indexOptions[@]}"; do
       ${APP_PATH}/services.sh
       break
       ;;
+    "Update")
+      ${APP_PATH}/update_setup-idx.sh
+      echo -e "🚀 Setup IDX has been updated!\n"
+      exit 0
+      break
+      ;;
+    "Uninstall")
+      ${APP_PATH}/uninstall_setup-idx.sh
+      echo -e "🚀 Setup IDX has been uninstalled!\n"
+      exit 0
+      break
+      ;;
     "Exit")
       echo -e "🥰 Have a great day!"
       exit 0
+      break
+      ;;
   esac
   echo -e "💡 All done, have fun to KODING!\n"
   exit 0

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SSH_PERSONAL_PATH=${HOME}/.ssh
+SSH_PERSONAL_PATH=$HOME/.ssh
 
 if [ ! -d $SSH_PERSONAL_PATH ]; then mkdir $SSH_PERSONAL_PATH; else echo "(i) SSH personal directory exist"; fi
 

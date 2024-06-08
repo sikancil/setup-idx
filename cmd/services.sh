@@ -33,9 +33,10 @@ COMPOSER=(
   "06__docker-compose-all.yml"
 )
 
-SETUP_PATH=$(pwd)/.setup-idx
-SERVICE_ENV_PATH=$SETUP_PATH/.env.services
-TMP_SERVICES_PATH=$SETUP_PATH/../.services
+APP_HOME=$HOME/.setup-idx
+APP_PATH=$APP_HOME/app
+SERVICE_ENV_PATH=$APP_PATH/cmd/.env.services
+TMP_SERVICES_PATH=$APP_PATH/.services
 
 # Read user input
 read -p "🚦 Enter your choice: " choice
@@ -44,7 +45,23 @@ echo "$choice"
 
 if [ "$choice" -ge 1 ] && [ "$choice" -le 6 ]; then
   if [ ! -f $SERVICE_ENV_PATH ]; then
-    cp $SETUP_PATH/cmd/.env.services-example $SERVICE_ENV_PATH;
+    # cp $APP_PATH/cmd/.env.services-example $SERVICE_ENV_PATH;
+
+    # Generate a random hash
+    HASH_MARIADB_ROOT_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+    HASH_MARIADB_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 20 | head -n 1)
+    HASH_REDIS_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+
+    # Read the content of the example file
+    CONTENT=$(cat ./cmd/.env.services-example)
+
+    # Replace the placeholders with the generated hash
+    CONTENT=$(echo "$CONTENT" | sed "s/MARIADB_ROOT_PASSWORD=.*/MARIADB_ROOT_PASSWORD=\"$HASH_MARIADB_ROOT_PASSWORD\"/")
+    CONTENT=$(echo "$CONTENT" | sed "s/MARIADB_PASSWORD=.*/MARIADB_PASSWORD=\"$HASH_MARIADB_PASSWORD\"/")
+    CONTENT=$(echo "$CONTENT" | sed "s/REDIS_ARGS=.*/REDIS_ARGS=\"--requirepass $HASH_REDIS_PASSWORD\"/")
+
+    # Save the modified content to the new file
+    echo "$CONTENT" > $TMP_SERVICES_PATH
   fi
     
   # Get the last modified timestamp of .env.services
@@ -78,12 +95,12 @@ if [ "$choice" -ge 1 ] && [ "$choice" -le 6 ]; then
   echo "${COMPOSER[$choice-1]}" > $TMP_SERVICES_PATH
   # echo "$(cat $TMP_SERVICES_PATH)"
   
-  docker compose -f "${SETUP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" up -d
+  docker compose -f "${APP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" up -d
   echo -e "🚀 Services has been lanched!\n"
 elif [ "$choice" -eq 7 ]; then
   echo "$(cat $TMP_SERVICES_PATH)"
   if [ -f $TMP_SERVICES_PATH ]; then
-    docker compose -f "${SETUP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" restart
+    docker compose -f "${APP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" restart
     echo -e "🎷 Services has been restarted!\n"
   else
     echo -e "🚫 No services to restart!\n"
@@ -91,7 +108,7 @@ elif [ "$choice" -eq 7 ]; then
 elif [ "$choice" -eq 8 ]; then
   echo "$(cat $TMP_SERVICES_PATH)"
   if [ -f $TMP_SERVICES_PATH ]; then
-    docker compose -f "${SETUP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" down --remove-orphans --volumes
+    docker compose -f "${APP_PATH}/dockers/$(cat $TMP_SERVICES_PATH)" down --remove-orphans --volumes
     echo -e "⛔️ Services has been shutdown!\n"
   else
     echo -e "🚫 No services to shutdown!\n"
