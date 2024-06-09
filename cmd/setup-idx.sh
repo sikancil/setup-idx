@@ -20,33 +20,33 @@ select opt in "${indexOptions[@]}"; do
   
   case $opt in
     "Walkthrough all")
-      ${APP_PATH}/ide.sh
+      ${APP_HOME}/ide.sh
       sleep 2
-      ${APP_PATH}/git.sh
+      ${APP_HOME}/git.sh
       sleep 2
-      ${APP_PATH}/services.sh
+      ${APP_HOME}/services.sh
       break
       ;;
     "Preconfigure IDX")
-      ${APP_PATH}/ide.sh
+      ${APP_HOME}/ide.sh
       break
       ;;
     "Only Setup SSH Keys")
-      ${APP_PATH}/git.sh
+      ${APP_HOME}/git.sh
       break
       ;;
     "Only Setup Services")
-      ${APP_PATH}/services.sh
+      ${APP_HOME}/services.sh
       break
       ;;
     "Update")
-      ${APP_PATH}/update_setup-idx
+      ${APP_HOME}/update_setup-idx
       echo -e "🚀 Setup IDX has been updated!\n"
       exit 0
       break
       ;;
     "Uninstall")
-      ${APP_PATH}/uninstall_setup-idx
+      ${APP_HOME}/uninstall_setup-idx
       echo -e "🚀 Setup IDX has been uninstalled!\n"
       exit 0
       break

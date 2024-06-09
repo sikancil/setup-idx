@@ -14,7 +14,7 @@ Before you begin, make sure you have:
 ## Installation 🛠️
 ### Option 1: One-Line Install
 ```bash
-$ curl -fsSL https://raw.githubusercontent.com/sikancil/setup-idx/main/install_setup-idx | bash
+curl -fsSL https://raw.githubusercontent.com/sikancil/setup-idx/main/install_setup-idx | bash
 ```
 ### Option 2: Manual Install
 1. **Clone the repository:**
